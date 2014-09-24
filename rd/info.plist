@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string></string>
+	<key>connections</key>
+	<dict>
+		<key>83A27EA0-0A89-46B8-A603-47795FFE0F70</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>9FF8CCD6-B6D5-4F69-879B-DEE99453522E</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>yukun</string>
+	<key>description</key>
+	<string>windows remote desktop</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>windows remote desktop</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>escaping</key>
+				<integer>123</integer>
+				<key>keyword</key>
+				<string>rd</string>
+				<key>script</key>
+				<string># http://www.alfredforum.com/topic/2702-xmlscriptfilter-with-bash/
+# http://www.alfredforum.com/topic/5-generating-feedback-in-workflows/
+# http://stackoverflow.com/questions/10969953/how-to-output-a-multiline-string-in-bash
+# http://superuser.com/questions/620570/how-do-i-return-only-file-names-from-the-find-command
+
+
+dir="/Users/yukun/Documents/RDC Connections/"
+
+outputitem(){
+	filename=$(basename "${1}")
+	extension="${filename##*.}"
+	filename="${filename%.*}"
+	
+	echo "    &lt;item arg=\"${1}\" uid=\"rd-$filename\" valid=\"yes\"&gt;"
+	echo "       &lt;title&gt;$filename&lt;/title&gt;"
+	echo "       &lt;subtitle&gt;${1}&lt;/subtitle&gt;"
+	echo "    &lt;/item&gt;"
+}
+
+cat &lt;&lt; EOF
+&lt;?xml version="1.0"?&gt;
+&lt;items&gt;
+EOF
+
+find "/Users/yukun/Documents/RDC Connections" -name "*{query}*.rdp" | while read line ; do outputitem "$line" ; done
+
+cat &lt;&lt; EOF
+&lt;/items&gt;
+EOF</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>83A27EA0-0A89-46B8-A603-47795FFE0F70</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>escaping</key>
+				<integer>122</integer>
+				<key>script</key>
+				<string># http://apple.stackexchange.com/questions/54918/command-line-arguments-for-remote-desktop-connection-for-mac
+
+#echo "{query}"
+#echo open -na "/Applications/Remote Desktop Connection.app/Contents/MacOS/Remote Desktop Connection" --args "{query}" &gt;&gt; ~/debug.txt
+
+open -na "/Applications/Remote Desktop Connection.app/Contents/MacOS/Remote Desktop Connection" --args "{query}"
+</string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>9FF8CCD6-B6D5-4F69-879B-DEE99453522E</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>toggle</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.launchfiles</string>
+			<key>uid</key>
+			<string>8CD02F4D-9DFF-4355-808F-4925B641E70E</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>applescript</key>
+				<string>on alfred_script(q)
+  do shell script "/succez/succezIDE/bin/eclipse.sh " &amp; q
+end alfred_script</string>
+				<key>cachescript</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.applescript</string>
+			<key>uid</key>
+			<string>863AB48D-5A6A-4840-9DCA-D9CA53D9EF56</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string></string>
+	<key>uidata</key>
+	<dict>
+		<key>83A27EA0-0A89-46B8-A603-47795FFE0F70</key>
+		<dict>
+			<key>ypos</key>
+			<real>60</real>
+		</dict>
+		<key>863AB48D-5A6A-4840-9DCA-D9CA53D9EF56</key>
+		<dict>
+			<key>ypos</key>
+			<real>300</real>
+		</dict>
+		<key>8CD02F4D-9DFF-4355-808F-4925B641E70E</key>
+		<dict>
+			<key>ypos</key>
+			<real>180</real>
+		</dict>
+		<key>9FF8CCD6-B6D5-4F69-879B-DEE99453522E</key>
+		<dict>
+			<key>ypos</key>
+			<real>60</real>
+		</dict>
+	</dict>
+	<key>webaddress</key>
+	<string></string>
+</dict>
+</plist>
